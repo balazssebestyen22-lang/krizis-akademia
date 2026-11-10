@@ -1,13 +1,17 @@
 import { PrismaClient } from "@prisma/client"
+import { PrismaNeon } from "@prisma/adapter-neon"
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-export const db =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
-  })
+function createPrismaClient(): PrismaClient {
+  const url = process.env.DATABASE_URL ?? process.env.POSTGRES_URL
+  if (!url) throw new Error("DATABASE_URL is not set")
+  const adapter = new PrismaNeon({ connectionString: url })
+  return new PrismaClient({ adapter })
+}
+
+export const db = globalForPrisma.prisma ?? createPrismaClient()
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db

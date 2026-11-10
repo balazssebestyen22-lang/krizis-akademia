@@ -1,6 +1,6 @@
 export default {
   datasource: {
-    url: `file:${process.cwd()}/prisma/dev.db`,
+    url: process.env.DATABASE_URL,
   },
   schema: "./prisma/schema.prisma",
 }
