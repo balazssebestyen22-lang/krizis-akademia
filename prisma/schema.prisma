@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         Role      @default(USER)
+  createdAt    DateTime  @default(now())
+  sessions     Session[]
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model Scenario {
+  id            String     @id @default(cuid())
+  title         String
+  description   String
+  crisisType    String
+  difficulty    Difficulty
+  systemPrompt  String
+  characterName String     @default("")
+  isActive      Boolean    @default(true)
+  createdAt     DateTime   @default(now())
+  sessions      Session[]
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+model Session {
+  id         String        @id @default(cuid())
+  userId     String
+  scenarioId String
+  startedAt  DateTime      @default(now())
+  endedAt    DateTime?
+  status     SessionStatus @default(IN_PROGRESS)
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scenario   Scenario      @relation(fields: [scenarioId], references: [id])
+  messages   Message[]
+  feedback   Feedback?
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+}
+
+model Message {
+  id        String      @id @default(cuid())
+  sessionId String
+  role      MessageRole
+  content   String
+  createdAt DateTime    @default(now())
+  session   Session     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+}
+
+model Feedback {
+  id             String   @id @default(cuid())
+  sessionId      String   @unique
+  overallRating  Int
+  goodSentences  String
+  improvements   String
+  aiAnalysis     String
+  overallSummary String
+  createdAt      DateTime @default(now())
+  session        Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
