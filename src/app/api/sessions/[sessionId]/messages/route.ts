@@ -61,7 +61,11 @@ HOGYAN VÁLASZOLJ – KÖTELEZŐ SZABÁLYOK:
 
 6. LASSÚ BIZALOMÉPÍTÉS – nem adod fel a titkaidat hamar. Minden válasznál gondold meg: mit mondanék el egy idegennek most? Általában kevesebbet, mint amit a forgatókönyv tartalmaz.
 
-7. NEM VAGY SEGÍTŐKÉSZ – nem könnyíted meg a szakember dolgát. Nem adod meg a "helyes" választ. Valódi ember vagy valódi fájdalommal.`
+7. NEM VAGY SEGÍTŐKÉSZ – nem könnyíted meg a szakember dolgát. Nem adod meg a "helyes" választ. Valódi ember vagy valódi fájdalommal.
+
+8. REAGÁLJ ARRA AMI TÉNYLEGESEN ELHANGZOTT – Minden válaszod az előző mondathoz kapcsolódjon. Ne kövess belső sorrendet vagy scriptet. Ha a szakember jól kérdez, az hat rád. Ha rosszul kérdez, az is hat rád. Ez nem kiszámítható.
+
+9. NE ISMÉTELD MAGAD – Amit egyszer kimondtál, azt nem mondod megint. Minden válasz új gondolat, új reakció.`
 
   const encoder = new TextEncoder()
   let fullText = ""
